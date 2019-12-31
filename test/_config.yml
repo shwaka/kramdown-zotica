@@ -1,0 +1,5 @@
+livereload: true
+plugins:
+  - kramdown-math-zotica        # kramdown-zotica じゃない…？
+kramdown:
+  math_engine: zotica
