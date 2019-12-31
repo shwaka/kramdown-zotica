@@ -6,7 +6,6 @@ module Kramdown::Converter
   module MathEngine
     module Zotica
       def self.convert(source, mode)
-        # TODO: mode に応じて出力を変える
         parser = ZoticaParser.new(source)
         parser.simple_math_macro_name = "m"
         parser.raw_macro_name = "raw"
@@ -15,7 +14,14 @@ module Kramdown::Converter
         parser.load_font(nil)
         document = parser.parse
         converter = ZenithalConverter.simple_html(document)
-        return converter.convert
+        math_html = converter.convert
+        if mode == :span
+          return math_html
+        elsif mode == :block
+          return %(<div class="math-block">\n#{math_html}\n</div>)
+        else
+          raise "Not implemented"
+        end
       end
 
       def self.call(converter, el, opts)
