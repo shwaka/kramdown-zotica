@@ -6,13 +6,13 @@ module Kramdown::Converter
   module MathEngine
     module Zotica
       def self.convert(source, mode)
-        parser = ZoticaParser.new(source)
-        parser.simple_math_macro_name = "m"
-        parser.raw_macro_name = "raw"
-        parser.resource_macro_name = "math-resource"
-        parser.only_math = true
+        parser = ZoticaSingleParser.new(source)
+        # parser.simple_math_macro_name = "m"
+        # parser.raw_macro_name = "raw"
+        # parser.resource_macro_name = "math-resource"
+        # parser.only_math = true
         parser.load_font(nil)
-        document = parser.parse
+        document = parser.run
         converter = ZenithalConverter.simple_html(document)
         math_html = converter.convert
         if mode == :span
